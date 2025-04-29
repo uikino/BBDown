@@ -29,7 +29,7 @@ public class FavListFetcher : IFetcher
       try {
         return e.Value.GetProperty(name);
       } catch (Exception ex) {
-        ExceptionWithDiagnosticsLog($"Could not get property {name} with exception {ex.Message}");
+        ExceptionWithDiagnosticsLog(ex, $"Could not get property {name} with exception {ex.Message}");
         return null;
       }
     }
@@ -38,7 +38,7 @@ public class FavListFetcher : IFetcher
       try {
         return e.Value.GetProperty(name).GetString();
       } catch (Exception ex) {
-        ExceptionWithDiagnosticsLog($"Could not get property {name} with exception {ex.Message}");
+        ExceptionWithDiagnosticsLog(ex, $"Could not get property {name} with exception {ex.Message}");
         return defaultValue;
       }
     }
@@ -48,7 +48,7 @@ public class FavListFetcher : IFetcher
       try {
         return e.Value.GetProperty(name).GetInt32();
       } catch (Exception ex) {
-        ExceptionWithDiagnosticsLog($"Could not get property {name} with exception {ex.Message}");
+        ExceptionWithDiagnosticsLog(ex, $"Could not get property {name} with exception {ex.Message}");
         return defaultValue;
       }
     }
@@ -58,7 +58,7 @@ public class FavListFetcher : IFetcher
       try {
         return e.Value.GetProperty(name).GetInt64();
       } catch (Exception ex) {
-        ExceptionWithDiagnosticsLog($"Could not get property {name} with exception {ex.Message}");
+        ExceptionWithDiagnosticsLog(ex, $"Could not get property {name} with exception {ex.Message}");
         return defaultValue;
       }
     }
