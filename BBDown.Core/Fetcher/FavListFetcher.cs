@@ -1,8 +1,9 @@
 ﻿using BBDown.Core.Entity;
-using BBDown.Core.Logger;
 using System.Text.Json;
 using static BBDown.Core.Entity.Entity;
 using static BBDown.Core.Util.HTTPUtil;
+using static BBDown.Core.Logger;
+
 
 
 namespace BBDown.Core.Fetcher;
