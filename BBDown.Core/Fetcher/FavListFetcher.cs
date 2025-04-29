@@ -14,8 +14,7 @@ namespace BBDown.Core.Fetcher;
 ///
 /// </summary>
 public class FavListFetcher : IFetcher
-{
-    public 
+{ 
     public async Task<VInfo> FetchAsync(string id)
     {
         id = id[6..];
