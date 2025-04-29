@@ -54,12 +54,12 @@ public class FavListFetcher : IFetcher
                 medias.AddRange(data.GetProperty("medias").EnumerateArray().ToList());
             } catch (InvalidOperationException e) {
                 err_count++;
-                LogError("错误发生于: 标题:{title},目标api:{api},内容为:{json}");
+                Logger.LogError("错误发生于: 标题:{title},目标api:{api},内容为:{json}");
                 if (err_count >= 5) {
-                    LogError("错误仍然无法恢复!");
+                    Logger.Logger.LogError("错误仍然无法恢复!");
                     throw e;
                 } else {
-                    LogWarn("执行跳过...");
+                    Logger.LogWarn("执行跳过...");
                     continue;
                 }
             }
@@ -107,12 +107,12 @@ public class FavListFetcher : IFetcher
             
                 } catch(InvalidOperationException e) {
                     err_count++;
-                    LogError("错误发生于:pageCount>1分支");
+                    Logger.LogError("错误发生于:pageCount>1分支");
                     if (err_count >= 5) {
-                        LogError("错误仍然无法恢复!");
+                        Logger.LogError("错误仍然无法恢复!");
                         throw e;
                     } else {
-                        LogWarn("执行跳过...");
+                        Logger.LogWarn("执行跳过...");
                         continue;
                     }
                 }
