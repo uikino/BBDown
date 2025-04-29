@@ -20,34 +20,38 @@ public class FavListFetcher : IFetcher
     }
 
     public JsonElement? TryGetProperty(JsonElement e, String name) {
+      if (e == null) return null; 
       try {
-        return e.GetProperty(name);
+        return e!.Value.GetProperty(name);
       } catch (InvalidOperationException ex) {
         ExceptionWithDiagnosticsLog($"Could not get property {name}");
         return null;
       }
     }
-    public String GetPropertyToString(JsonElement e, String name, String defaultValue = "") {
+    public String GetPropertyToString(JsonElement? e, String name, String defaultValue = "") {
+      if (e == null) return defaultValue; 
       try {
-        return e.GetProperty(name).GetString();
+        return e!.Value.GetProperty(name).GetString();
       } catch (InvalidOperationException ex) {
         ExceptionWithDiagnosticsLog($"Could not get property {name}");
         return defaultValue;
       }
     }
 
-    public Int32 GetPropertyToInt32(JsonElement e, String name, Int32 defaultValue = 0) {
+    public Int32 GetPropertyToInt32(JsonElement? e, String name, Int32 defaultValue = 0) {
+      if (e == null) return defaultValue; 
       try {
-        return e.GetProperty(name).GetInt32();
+        return e!.Value.GetProperty(name).GetInt32();
         ExceptionWithDiagnosticsLog($"Could not get property {name}");
       } catch (InvalidOperationException ex) {
         return defaultValue;
       }
     }
 
-    public Int64 GetPropertyToInt64(JsonElement e, String name, Int64 defaultValue = 0) {
+    public Int64 GetPropertyToInt64(JsonElement? e, String name, Int64 defaultValue = 0) {
+      if (e == null) return defaultValue; 
       try {
-        return e.GetProperty(name).GetInt64();
+        return e!.Value.GetProperty(name).GetInt64();
       } catch (InvalidOperationException ex) {
         ExceptionWithDiagnosticsLog($"Could not get property {name}");
         return defaultValue;
@@ -130,12 +134,15 @@ public class FavListFetcher : IFetcher
             else
             {
 
-                    var id_ = m.GetPropertyToString("id");
+                    var id_ = GetPropertyToString(m, "id");
                     if (String.IsNullOrEmpty(id_)) {
                         LogError("致命错误，无法获取id.跳过...");
                         continue;
                     }
                     var e_tmp_  = TryGetProperty(m, "ugc");
+                    if (e_tmp_ == null) {
+                        LogError($"致命错误，目标{id_}无法获取first_cid");
+                    }
                     var cid_ = GetPropertyToString(e_tmp_, "first_cid");
                     var epid_ = ""; //epid
                     var title_ = GetPropertyToString(m, "title");
