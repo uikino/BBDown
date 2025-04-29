@@ -42,8 +42,8 @@ public class FavListFetcher : IFetcher
       if (e == null) return defaultValue; 
       try {
         return e.Value.GetProperty(name).GetInt32();
-        ExceptionWithDiagnosticsLog($"Could not get property {name} with exception {ex.Message}");
       } catch (Exception ex) {
+        ExceptionWithDiagnosticsLog($"Could not get property {name} with exception {ex.Message}");
         return defaultValue;
       }
     }
