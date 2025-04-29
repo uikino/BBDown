@@ -5,7 +5,6 @@ using static BBDown.Core.Entity.Entity;
 using static BBDown.Core.Util.HTTPUtil;
 using static BBDown.Core.Logger;
 
-
 namespace BBDown.Core.Fetcher;
 
 /// <summary>
@@ -20,7 +19,7 @@ public class FavListFetcher : IFetcher
       LogError($"Exception at {stackFrame.GetFileName()}:{stackFrame.GetFileLineNumber()}\n\tMethod {stackFrame.GetMethod().Name}, {msg}");
     }
 
-    public JsonElement TryGetProperty(JsonElement e, String name) {
+    public JsonElement? TryGetProperty(JsonElement e, String name) {
       try {
         return e.GetProperty(name);
       } catch (InvalidOperationException ex) {
@@ -30,7 +29,7 @@ public class FavListFetcher : IFetcher
     }
     public String GetPropertyToString(JsonElement e, String name, String defaultValue = "") {
       try {
-        return e.GetProperty(name).ToString();
+        return e.GetProperty(name).GetString();
       } catch (InvalidOperationException ex) {
         ExceptionWithDiagnosticsLog($"Could not get property {name}");
         return defaultValue;
@@ -39,7 +38,7 @@ public class FavListFetcher : IFetcher
 
     public Int32 GetPropertyToInt32(JsonElement e, String name, Int32 defaultValue = 0) {
       try {
-        return e.GetProperty(name).ToInt32();
+        return e.GetProperty(name).GetInt32();
         ExceptionWithDiagnosticsLog($"Could not get property {name}");
       } catch (InvalidOperationException ex) {
         return defaultValue;
@@ -48,7 +47,7 @@ public class FavListFetcher : IFetcher
 
     public Int64 GetPropertyToInt64(JsonElement e, String name, Int64 defaultValue = 0) {
       try {
-        return e.GetProperty(name).ToInt64();
+        return e.GetProperty(name).GetInt64();
       } catch (InvalidOperationException ex) {
         ExceptionWithDiagnosticsLog($"Could not get property {name}");
         return defaultValue;
