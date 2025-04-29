@@ -19,7 +19,7 @@ public class FavListFetcher : IFetcher
       LogError($"Exception at {stackFrame.GetFileName()}:{stackFrame.GetFileLineNumber()}\n\tMethod {stackFrame.GetMethod().Name}, {msg}");
     }
 
-    public JsonElement? TryGetProperty(JsonElement e, String name) {
+    public JsonElement? TryGetProperty(JsonElement? e, String name) {
       if (e == null) return null; 
       try {
         return e.Value.GetProperty(name);
