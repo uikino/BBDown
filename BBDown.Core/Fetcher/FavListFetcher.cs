@@ -15,16 +15,16 @@ namespace BBDown.Core.Fetcher;
 public class FavListFetcher : IFetcher
 {
     public void ExceptionWithDiagnosticsLog(String msg = "") {
-      StackFrame stackFrame = new StackTrace(new StackFrame(1,true)).GetFrame(0);
-      LogError($"Exception at {stackFrame.GetFileName()}:{stackFrame.GetFileLineNumber()}\n\tMethod {stackFrame.GetMethod().Name}, {msg}");
+      StackFrame stackFrame = new StackTrace(new StackFrame(true)).GetFrame(2);
+      LogError($"Exception at {stackFrame.GetFileName()}:{stackFrame.GetFileLineNumber()}\n\tMethod: {stackFrame.GetMethod().Name}, {msg}");
     }
 
     public JsonElement? TryGetProperty(JsonElement? e, String name) {
       if (e == null) return null; 
       try {
         return e.Value.GetProperty(name);
-      } catch (InvalidOperationException ex) {
-        ExceptionWithDiagnosticsLog($"Could not get property {name}");
+      } catch (Exception ex) {
+        ExceptionWithDiagnosticsLog($"Could not get property {name} with exception {ex.Message}");
         return null;
       }
     }
@@ -32,8 +32,8 @@ public class FavListFetcher : IFetcher
       if (e == null) return defaultValue; 
       try {
         return e.Value.GetProperty(name).GetString();
-      } catch (InvalidOperationException ex) {
-        ExceptionWithDiagnosticsLog($"Could not get property {name}");
+      } catch (Exception ex) {
+        ExceptionWithDiagnosticsLog($"Could not get property {name} with exception {ex.Message}");
         return defaultValue;
       }
     }
@@ -42,8 +42,8 @@ public class FavListFetcher : IFetcher
       if (e == null) return defaultValue; 
       try {
         return e.Value.GetProperty(name).GetInt32();
-        ExceptionWithDiagnosticsLog($"Could not get property {name}");
-      } catch (InvalidOperationException ex) {
+        ExceptionWithDiagnosticsLog($"Could not get property {name} with exception {ex.Message}");
+      } catch (Exception ex) {
         return defaultValue;
       }
     }
@@ -52,8 +52,8 @@ public class FavListFetcher : IFetcher
       if (e == null) return defaultValue; 
       try {
         return e.Value.GetProperty(name).GetInt64();
-      } catch (InvalidOperationException ex) {
-        ExceptionWithDiagnosticsLog($"Could not get property {name}");
+      } catch (Exception ex) {
+        ExceptionWithDiagnosticsLog($"Could not get property {name} with exception {ex.Message}");
         return defaultValue;
       }
     }
@@ -108,7 +108,7 @@ public class FavListFetcher : IFetcher
             }
         }
         err_count = 0;
-
+        
         foreach (var m in medias)
         {
             //只处理视频类型(可以直接在query param上指定type=2)
