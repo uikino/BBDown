@@ -1,5 +1,5 @@
 ﻿using BBDown.Core.Entity;
-using BBDowb.Core.Logger;
+using BBDown.Core.Logger;
 using System.Text.Json;
 using static BBDown.Core.Entity.Entity;
 using static BBDown.Core.Util.HTTPUtil;
