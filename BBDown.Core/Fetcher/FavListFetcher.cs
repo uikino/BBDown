@@ -15,7 +15,7 @@ namespace BBDown.Core.Fetcher;
 public class FavListFetcher : IFetcher
 {
     public void ExceptionWithDiagnosticsLog(String msg = "") {
-      StackFrame stackFrame = new StackTrace(new StackFrame(true)).GetFrame(2);
+      StackFrame stackFrame = new StackTrace(2, true).GetFrame(0);
       LogError($"Exception at {stackFrame.GetFileName()}:{stackFrame.GetFileLineNumber()}\n\tMethod: {stackFrame.GetMethod().Name}, {msg}");
     }
 
