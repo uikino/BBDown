@@ -54,12 +54,12 @@ public class FavListFetcher : IFetcher
                 medias.AddRange(data.GetProperty("medias").EnumerateArray().ToList());
             } catch (InvalidOperationException e) {
                 err_count++;
-                LogError("错误发生于: 标题:{title},目标api:{api},内容为:{json}")
+                LogError("错误发生于: 标题:{title},目标api:{api},内容为:{json}");
                 if (err_count >= 5) {
                     LogError("错误仍然无法恢复!");
                     throw e;
                 } else {
-                    LogWarn("执行跳过...")
+                    LogWarn("执行跳过...");
                     continue;
                 }
             }
@@ -91,29 +91,30 @@ public class FavListFetcher : IFetcher
             else
             {
                 try {
-                Page p = new(index++,
-                    m.GetProperty("id").ToString(),
-                    m.GetProperty("ugc").GetProperty("first_cid").ToString(),
-                    "", //epid
-                    m.GetProperty("title").ToString(),
-                    m.GetProperty("duration").GetInt32(),
-                    "",
-                    m.GetProperty("pubtime").GetInt64(),
-                    m.GetProperty("cover").ToString(),
-                    m.GetProperty("intro").ToString(),
-                    m.GetProperty("upper").GetProperty("name").ToString(),
-                    m.GetProperty("upper").GetProperty("mid").ToString());
-                if (!pagesInfo.Contains(p)) pagesInfo.Add(p);
+                    Page p = new(index++,
+                        m.GetProperty("id").ToString(),
+                        m.GetProperty("ugc").GetProperty("first_cid").ToString(),
+                        "", //epid
+                        m.GetProperty("title").ToString(),
+                        m.GetProperty("duration").GetInt32(),
+                        "",
+                        m.GetProperty("pubtime").GetInt64(),
+                        m.GetProperty("cover").ToString(),
+                        m.GetProperty("intro").ToString(),
+                        m.GetProperty("upper").GetProperty("name").ToString(),
+                        m.GetProperty("upper").GetProperty("mid").ToString());
+                    if (!pagesInfo.Contains(p)) pagesInfo.Add(p);
             
-            } catch(InvalidOperationException e) {
-                err_count++;
-                LogError("错误发生于:pageCount>1分支")
-                if (err_count >= 5) {
-                    LogError("错误仍然无法恢复!");
-                    throw e;
-                } else {
-                    LogWarn("执行跳过...")
-                    continue;
+                } catch(InvalidOperationException e) {
+                    err_count++;
+                    LogError("错误发生于:pageCount>1分支");
+                    if (err_count >= 5) {
+                        LogError("错误仍然无法恢复!");
+                        throw e;
+                    } else {
+                        LogWarn("执行跳过...");
+                        continue;
+                    }
                 }
             }
         }
