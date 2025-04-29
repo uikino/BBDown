@@ -5,7 +5,6 @@ using static BBDown.Core.Util.HTTPUtil;
 using static BBDown.Core.Logger;
 
 
-
 namespace BBDown.Core.Fetcher;
 
 /// <summary>
@@ -54,12 +53,12 @@ public class FavListFetcher : IFetcher
                 medias.AddRange(data.GetProperty("medias").EnumerateArray().ToList());
             } catch (InvalidOperationException e) {
                 err_count++;
-                Logger.LogError($"错误发生于: 标题:{title},目标api:{api},内容为:{json}");
+                LogError($"错误发生于: 标题:{title},目标api:{api},内容为:{json}");
                 if (err_count >= 5) {
-                    Logger.Logger.LogError("错误仍然无法恢复!");
+                    LogError("错误仍然无法恢复!");
                     throw e;
                 } else {
-                    Logger.LogWarn("执行跳过...");
+                    LogWarn("执行跳过...");
                     continue;
                 }
             }
@@ -107,12 +106,12 @@ public class FavListFetcher : IFetcher
             
                 } catch(InvalidOperationException e) {
                     err_count++;
-                    Logger.LogError("错误发生于:pageCount>1分支");
+                    LogError("错误发生于:pageCount>1分支");
                     if (err_count >= 5) {
-                        Logger.LogError("错误仍然无法恢复!");
+                        LogError("错误仍然无法恢复!");
                         throw e;
                     } else {
-                        Logger.LogWarn("执行跳过...");
+                        LogWarn("执行跳过...");
                         continue;
                     }
                 }
