@@ -14,9 +14,14 @@ namespace BBDown.Core.Fetcher;
 /// </summary>
 public class FavListFetcher : IFetcher
 {
-    public void ExceptionWithDiagnosticsLog(String msg = "") {
-      StackFrame stackFrame = new StackTrace(2, true).GetFrame(0);
+    public void ExceptionWithDiagnosticsLog(Exception ex, String msg = "") {
+    try {
+      StackTrace st = new StackTrace(ex, 2, true);
+      StackFrame stackFrame = st.GetFrame(0);
       LogError($"Exception at {stackFrame.GetFileName()}:{stackFrame.GetFileLineNumber()}\n\tMethod: {stackFrame.GetMethod().Name}, {msg}");
+      }catch (Exception ef){
+      
+      }
     }
 
     public JsonElement? TryGetProperty(JsonElement? e, String name) {
