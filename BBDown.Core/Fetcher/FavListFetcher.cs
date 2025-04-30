@@ -145,7 +145,7 @@ public class FavListFetcher : IFetcher
                         if(!String.IsNullOrEmpty(id_)) {
                             LogWarn($"id不存在，切换使用aid: {id_}");
                         } else {
-                            LogError("致命错误，无法获取id或者aid跳过..., json: {m. ToString()}");
+                            LogError($"致命错误，无法获取id或者aid跳过..., json: {m. ToString()}");
                             continue;
                         } 
                     }
