@@ -9,6 +9,7 @@ using static BBDown.Core.Entity.Entity;
 using static BBDown.Core.Logger;
 using static BBDown.Core.Util.HTTPUtil;
 using System.Collections.Concurrent;
+using System.Text;
 
 namespace BBDown;
 
@@ -22,22 +23,40 @@ internal static class BBDownDownloadUtil
         public bool MultiThread { get; set; } = false;
         public DownloadTask? RelatedTask { get; set; } = null;
     }
+    private static int GetStringBytesLenInUnicodeEnc(String s) {
+        return ASCIIEncoding.Unicode.GetByteCount(s);
+    }
 
-    private static String ReduceTargetFilenameToRequiredLength(String filename) { 
-        if (filename.Length >= 260) {
+    private static String ReduceTargetFilenameToRequiredLength(String filename) {
+        if (GetStringBytesLenInUnicodeEnc(filename) >= 260) {
             // 删除多余空格
-            String tmp = filename.Replace("  " ," ");
-            tmp = filename.Replace("   " ," ");
-            if (tmp.Length < 260) {
+            String dir_ = Path.GetDirectoryName(filename);
+            String basename_ = Path.GetFileNameWithoutExtension(filename);
+            String ext = Path.GetExtension(filename);
+            String basenameTemp = basename_.Replace("  " ," ").Replace("   " ," ");
+            String tmp = Path.Combine(dir_, basenameTemp, ext);
+            if (GetStringBytesLenInUnicodeEnc(tmp) < 260) {
                 return tmp;
             }
-            if (tmp.IndexOf(' ', 0) != -1) {
-                tmp = tmp.Split(' ')[0];
+            var idx = basename_.LastIndexOf(' ', 0);
+            if (idx != -1) {
+                var g = basename_.Split(' ');
+                // String.Concat(g);
+                // var g_len = ;
+                for (int itr = g.Length; itr; itr--) {
+                    Array.Resize(ref g, itr);
+                    basenameTemp = String.Concat(g);
+                    tmp = Path.Combine(dir_, basenameTemp, ext);
+                    if (GetStringBytesLenInUnicodeEnc(tmp) < 260) return tmp;
+                }
+            } else {
+                basenameTemp = basename_.Substring(0, 20);
+                tmp = Path.Combine(dir_, basenameTemp, ext); 
             }
-            if (tmp.Length < 260) {
+            if (GetStringBytesLenInUnicodeEnc(tmp) < 260) {
                 return tmp;
             }
-            return filename.Substring(0, 230);
+            return filename.Substring(0, 80);
         }
         return filename;
     }
