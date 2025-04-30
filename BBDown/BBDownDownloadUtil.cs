@@ -44,7 +44,7 @@ internal static class BBDownDownloadUtil
 
     private static async Task RangeDownloadToTmpAsync(int id, string url, string refFilename, long fromPosition, long? toPosition, Action<int, long, long> onProgress, bool failOnRangeNotSupported = false)
     {
-        vartmpName = ReduceTargetFilenameToRequiredLength(refFilename);
+        var tmpName = ReduceTargetFilenameToRequiredLength(refFilename);
         DateTimeOffset? lastTime = File.Exists(tmpName) ? new FileInfo(tmpName).LastWriteTimeUtc : null;
         using var fileStream = new FileStream(tmpName, FileMode.Create);
         fileStream.Seek(0, SeekOrigin.End);
