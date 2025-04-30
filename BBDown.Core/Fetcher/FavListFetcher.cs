@@ -142,10 +142,10 @@ public class FavListFetcher : IFetcher
                     var id_ = GetPropertyToString(m, "id");
                     if (String.IsNullOrEmpty(id_)) {
                         id_ = GetPropertyToString(m, "aid");
-                        if(String.IsNullOrEmpty(id_)) {
+                        if(!String.IsNullOrEmpty(id_)) {
                             LogWarn($"id不存在，切换使用aid: {id_}");
                         } else {
-                            LogError("致命错误，无法获取id或者aid跳过...");
+                            LogError("致命错误，无法获取id或者aid跳过..., json: {m. ToString()}");
                             continue;
                         } 
                     }
