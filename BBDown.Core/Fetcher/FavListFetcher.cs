@@ -141,8 +141,13 @@ public class FavListFetcher : IFetcher
 
                     var id_ = GetPropertyToString(m, "id");
                     if (String.IsNullOrEmpty(id_)) {
-                        LogError("致命错误，无法获取id.跳过...");
-                        continue;
+                        id_ = GetPropertyToString(m, "aid");
+                        if(String.IsNullOrEmpty(id_)) {
+                            LogWarn($"id不存在，切换使用aid: {id_}");
+                        } else {
+                            LogError("致命错误，无法获取id或者aid跳过...");
+                            continue;
+                        } 
                     }
                     var e_tmp_  = TryGetProperty(m, "ugc");
                     if (e_tmp_ == null) {
