@@ -43,7 +43,7 @@ internal static class BBDownDownloadUtil
                 var g = basename_.Split(' ');
                 // String.Concat(g);
                 // var g_len = ;
-                for (int itr = g.Length; itr; itr--) {
+                for (int itr = g.Length; itr != 0; itr--) {
                     Array.Resize(ref g, itr);
                     basenameTemp = String.Concat(g);
                     tmp = Path.Combine(dir_, basenameTemp, ext);
