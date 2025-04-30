@@ -139,16 +139,8 @@ public class FavListFetcher : IFetcher
             else
             {
 
-                    var id_ = m.GetProperty("id").GetString();
-                    if (String.IsNullOrEmpty(id_)) {
-                        id_ = GetPropertyToString(m, "aid");
-                        if(!String.IsNullOrEmpty(id_)) {
-                            LogWarn($"id不存在，切换使用aid: {id_}");
-                        } else {
-                            LogError($"致命错误，无法获取id或者aid跳过..., json: {m. ToString()}");
-                            continue;
-                        } 
-                    }
+                    var id_ = GetPropertyToInt32(m, "id").ToString();
+                    
                     var e_tmp_  = TryGetProperty(m, "ugc");
                     if (e_tmp_ == null) {
                         LogError($"致命错误，目标{id_}无法获取first_cid");
