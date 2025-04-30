@@ -23,8 +23,28 @@ internal static class BBDownDownloadUtil
         public DownloadTask? RelatedTask { get; set; } = null;
     }
 
-    private static async Task RangeDownloadToTmpAsync(int id, string url, string tmpName, long fromPosition, long? toPosition, Action<int, long, long> onProgress, bool failOnRangeNotSupported = false)
+    private String ReduceTargetFilenameToRequiredLength(String filename) { 
+        if (filename.Length >= 260) {
+            // 删除多余空格
+            String tmp = filename.Replace("  " ," ");
+            tmp = filename.Replace("   " ," ");
+            if (tmp.Length < 260) {
+                return tmp;
+            }
+            if (tmp.IndexOf(' ', 0) != -1) {
+                tmp = tmp.Split(' ')[0];
+            }
+            if (tmp.Length < 260) {
+                return tmp;
+            }
+            return filename.Substring(0, 230);
+        }
+        return filename;
+    }
+
+    private static async Task RangeDownloadToTmpAsync(int id, string url, string refFilename, long fromPosition, long? toPosition, Action<int, long, long> onProgress, bool failOnRangeNotSupported = false)
     {
+        vartmpName = ReduceTargetFilenameToRequiredLength(refFilename);
         DateTimeOffset? lastTime = File.Exists(tmpName) ? new FileInfo(tmpName).LastWriteTimeUtc : null;
         using var fileStream = new FileStream(tmpName, FileMode.Create);
         fileStream.Seek(0, SeekOrigin.End);
