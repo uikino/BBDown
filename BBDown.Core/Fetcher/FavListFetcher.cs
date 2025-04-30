@@ -139,7 +139,7 @@ public class FavListFetcher : IFetcher
             else
             {
 
-                    var id_ = GetPropertyToString(m, "id");
+                    var id_ = m.GetProperty("id").GetString();
                     if (String.IsNullOrEmpty(id_)) {
                         id_ = GetPropertyToString(m, "aid");
                         if(!String.IsNullOrEmpty(id_)) {
