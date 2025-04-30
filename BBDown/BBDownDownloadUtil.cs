@@ -23,7 +23,7 @@ internal static class BBDownDownloadUtil
         public DownloadTask? RelatedTask { get; set; } = null;
     }
 
-    private String ReduceTargetFilenameToRequiredLength(String filename) { 
+    private static String ReduceTargetFilenameToRequiredLength(String filename) { 
         if (filename.Length >= 260) {
             // 删除多余空格
             String tmp = filename.Replace("  " ," ");
