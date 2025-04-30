@@ -88,8 +88,9 @@ internal static class BBDownDownloadUtil
             throw new Exception("Retry...");
     }
 
-    public static async Task DownloadFileAsync(string url, string path, DownloadConfig config)
+    public static async Task DownloadFileAsync(string url, string refFilename, DownloadConfig config)
     {
+        var path = ReduceTargetFilenameToRequiredLength(refFilename);
         if (string.IsNullOrEmpty(url)) return;
         if (config.ForceHttp) url = ReplaceUrl(url);
         LogDebug("Start downloading: {0}", url);
@@ -119,9 +120,10 @@ internal static class BBDownDownloadUtil
         }
     }
 
-    public static async Task MultiThreadDownloadFileAsync(string url, string path, DownloadConfig config)
+    public static async Task MultiThreadDownloadFileAsync(string url, string refFilename, DownloadConfig config)
     {
         if (config.ForceHttp) url = ReplaceUrl(url);
+        var path = ReduceTargetFilenameToRequiredLength(refFilename);
         LogDebug("Start downloading: {0}", url);
         if (config.UseAria2c)
         {
