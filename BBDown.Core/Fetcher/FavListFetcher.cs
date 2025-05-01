@@ -138,34 +138,24 @@ public class FavListFetcher : IFetcher
             }
             else
             {
-
-                    var id_ = GetPropertyToInt64(m, "id").ToString();
-                    if (id_ == "0") {
-                        id_ = m.GetProperty("id").GetString();
-                    }
-                    if (String.IsNullOrEmpty(id_)) {
-                        var jsonTmp = m.ToString();
-                        LogError($"无法获取id, json: {jsonTmp}");
-                        continue;
-                    }
-                    
-                    var e_tmp_  = TryGetProperty(m, "ugc");
-                    if (e_tmp_ == null) {
-                        LogError($"致命错误，目标{id_}无法获取first_cid");
-                    }
-                    var cid_ = m.GetProperty("ugc").GetProperty("first_cid").ToString();
-                    var epid_ = ""; //epid
-                    var title_ = m.GetProperty("title").ToString();
-                    var dur_ = m.GetProperty("duration").GetInt32();
-                    var u_ = "";
-                    var pubtime_ = GetPropertyToInt64(m, "pubtime");
-                    var cover_ = GetPropertyToString(m, "cover");
-                    var intro_ = GetPropertyToString(m, "intro");
-                    e_tmp_  = TryGetProperty(m, "upper");
-                    var upper_name_ = GetPropertyToString(e_tmp_, "name");
-                    var upper_mid_ = GetPropertyToString(e_tmp_, "mid");
-                    Page p = new(index++, id_, cid_, epid_, title_, dur_, u_, pubtime_, cover_, intro_, upper_name_, upper_mid_);
+                try{
+                    Page p = new(index++,
+                        m.GetProperty("id").ToString(),
+                        m.GetProperty("ugc").GetProperty("first_cid").ToString(),
+                        "", //epid
+                        m.GetProperty("title").ToString(),
+                        m.GetProperty("duration").GetInt32(),
+                        "",
+                        m.GetProperty("pubtime").GetInt64(),
+                        m.GetProperty("cover").ToString(),
+                        m.GetProperty("intro").ToString(),
+                        m.GetProperty("upper").GetProperty("name").ToString(),
+                        m.GetProperty("upper").GetProperty("mid").ToString());
                     if (!pagesInfo.Contains(p)) pagesInfo.Add(p);
+                }catch(Exception ex){
+                    LogError($"发生异常: {ex.Message}, json: {m.ToString()}");
+                    continue;
+                } 
             
             }
         }
