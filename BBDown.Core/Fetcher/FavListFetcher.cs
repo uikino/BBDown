@@ -149,10 +149,10 @@ public class FavListFetcher : IFetcher
                         continue;
                     }
                     
-                    // var e_tmp_  = TryGetProperty(m, "ugc");
-                    // if (e_tmp_ == null) {
-                    //     LogError($"致命错误，目标{id_}无法获取first_cid");
-                    // }
+                    var e_tmp_  = TryGetProperty(m, "ugc");
+                    if (e_tmp_ == null) {
+                        LogError($"致命错误，目标{id_}无法获取first_cid");
+                    }
                     var cid_ = m.GetProperty("ugc").GetProperty("first_cid").ToString();
                     var epid_ = ""; //epid
                     var title_ = m.GetProperty("title").ToString();
