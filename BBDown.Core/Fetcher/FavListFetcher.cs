@@ -139,7 +139,14 @@ public class FavListFetcher : IFetcher
             else
             {
 
-                    var id_ = GetPropertyToInt32(m, "id").ToString();
+                    var id_ = GetPropertyToInt64(m, "id").ToString();
+                    if (id_ == 0) {
+                        id_ = m.GetProperty("id").GetString();
+                    }
+                    if (String.IsNullOrEmpty(id_)) {
+                        LogError($"无法获取id, json: {m.ToString()}");
+                        continue;
+                    }
                     
                     var e_tmp_  = TryGetProperty(m, "ugc");
                     if (e_tmp_ == null) {
