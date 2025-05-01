@@ -144,18 +144,19 @@ public class FavListFetcher : IFetcher
                         id_ = m.GetProperty("id").GetString();
                     }
                     if (String.IsNullOrEmpty(id_)) {
-                        LogError($"无法获取id, json: {m.ToString()}");
+                        var jsonTmp = m.ToString(jsonTmp);
+                        LogError($"无法获取id, json: {}");
                         continue;
                     }
                     
-                    var e_tmp_  = TryGetProperty(m, "ugc");
-                    if (e_tmp_ == null) {
-                        LogError($"致命错误，目标{id_}无法获取first_cid");
-                    }
-                    var cid_ = GetPropertyToString(e_tmp_, "first_cid");
+                    // var e_tmp_  = TryGetProperty(m, "ugc");
+                    // if (e_tmp_ == null) {
+                    //     LogError($"致命错误，目标{id_}无法获取first_cid");
+                    // }
+                    var cid_ = m.GetProperty("ugc").GetProperty("first_cid").ToString();
                     var epid_ = ""; //epid
-                    var title_ = GetPropertyToString(m, "title");
-                    var dur_ = GetPropertyToInt32(m, "duration");
+                    var title_ = m.GetProperty("title").ToString();
+                    var dur_ = m.GetProperty("duration").GetInt32();
                     var u_ = "";
                     var pubtime_ = GetPropertyToInt64(m, "pubtime");
                     var cover_ = GetPropertyToString(m, "cover");
