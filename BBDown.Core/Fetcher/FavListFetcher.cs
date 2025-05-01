@@ -145,7 +145,7 @@ public class FavListFetcher : IFetcher
                     }
                     if (String.IsNullOrEmpty(id_)) {
                         var jsonTmp = m.ToString();
-                        LogError($"无法获取id, json: {}");
+                        LogError($"无法获取id, json: {jsonTmp}");
                         continue;
                     }
                     
